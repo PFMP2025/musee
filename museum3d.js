@@ -1,4 +1,4 @@
-// Chargement en modules (ne pas ajouter d'autres <script> CDN ailleurs)
+// museum3d.js — version modules (à la racine du dépôt)
 import * as THREE from 'https://unpkg.com/three@0.160.0/build/three.module.js';
 import { OrbitControls } from 'https://unpkg.com/three@0.160.0/examples/jsm/controls/OrbitControls.js';
 
@@ -42,7 +42,7 @@ const right= new THREE.Mesh(sideGeo, wallMat); right.rotation.y = -Math.PI/2; ri
 
 scene.add(room);
 
-// Helpers (textures texte)
+// Helpers (textures avec texte)
 function wrapText(ctx, text, x, y, maxWidth, lineHeight){
   const words = (text||'').split(' ');
   let line = ''; let yy = y;
@@ -81,7 +81,7 @@ function makeSmallLabel(title, subtitle){
   return new THREE.CanvasTexture(cnv);
 }
 
-// Interaction (raycaster)
+// Interaction
 const raycaster = new THREE.Raycaster();
 const mouse = new THREE.Vector2();
 const interactables = [];
@@ -169,7 +169,7 @@ function onClick(e){
 window.addEventListener('mousemove', onPointerMove);
 window.addEventListener('click', onClick);
 
-// Resize + render loop
+// Resize + boucle
 window.addEventListener('resize', ()=>{
   renderer.setSize(window.innerWidth, window.innerHeight);
   camera.aspect = window.innerWidth / window.innerHeight;
