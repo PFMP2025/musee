@@ -1,0 +1,7 @@
+:root{--hudbg:rgba(10,12,22,.6);--txt:#e5e7eb;--acc:#22d3ee}
+html,body{margin:0;height:100%;overflow:hidden;background:#0b1020;color:var(--txt);font-family:system-ui,Segoe UI,Roboto}
+#c{display:block;width:100vw;height:100vh}
+#hud{position:fixed;left:12px;top:12px;background:var(--hudbg);padding:10px 12px;border:1px solid #ffffff22;border-radius:12px;backdrop-filter:blur(6px);z-index:4}
+#hud h1{font-size:16px;margin:0 0 6px 0;color:var(--acc)}
+.hint{font-size:12px;opacity:.9}
+#tooltip{position:fixed;pointer-events:none;background:#111827cc;color:#fff;font-size:12px;padding:6px 8px;border-radius:8px;border:1px solid #ffffff33;transform:translate(-50%,-130%);white-space:nowrap;z-index:3}

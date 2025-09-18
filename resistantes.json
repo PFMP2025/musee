@@ -1,0 +1,48 @@
+[
+  {
+    "id": "aubrac",
+    "nom": "Lucie Aubrac",
+    "annee": 1943,
+    "ville": "Lyon",
+    "coords": [
+      45.75,
+      4.85
+    ],
+    "url": "./lucieAUBRAC.html",
+    "tags": [
+      "résistance",
+      "lyon",
+      "évasion"
+    ]
+  },
+  {
+    "id": "albrecht",
+    "nom": "Berty Albrecht",
+    "annee": 1943,
+    "ville": "Paris",
+    "coords": [
+      48.85,
+      2.35
+    ],
+    "url": "./bertyALBRECHT.html",
+    "tags": [
+      "combat",
+      "solidarité"
+    ]
+  },
+  {
+    "id": "baker",
+    "nom": "Joséphine Baker",
+    "annee": 1942,
+    "ville": "Paris",
+    "coords": [
+      48.86,
+      2.35
+    ],
+    "url": "./josephineBAKER.html",
+    "tags": [
+      "renseignement",
+      "artiste"
+    ]
+  }
+]

@@ -1,0 +1,224 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Femmes dans l’ombre – Lucie Aubrac (site démonstrateur)</title>
+  <meta name="description" content="Page finale démonstratrice : portrait, frise chronologique, images légendées, média audio/vidéo et manifeste." />
+  <style>
+    /* ----- Design global sobre et lisible ----- */
+    :root {
+      --bg: #0f172a;        /* bleu nuit */
+      --card: #111827;      /* gris anthracite */
+      --text: #e5e7eb;      /* gris clair */
+      --muted: #9ca3af;
+      --acc: #22d3ee;       /* cyan léger */
+      --acc-2: #f59e0b;     /* amber */
+      --maxw: 1100px;
+      --radius: 16px;
+    }
+    html, body { margin: 0; padding: 0; background: var(--bg); color: var(--text); font-family: system-ui, -apple-system, Segoe UI, Roboto, Ubuntu, Cantarell, Noto Sans, "Helvetica Neue", Arial, "Apple Color Emoji","Segoe UI Emoji"; line-height: 1.6; }
+    a { color: var(--acc); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+    header { position: sticky; top: 0; backdrop-filter: saturate(140%) blur(6px); background: rgba(17,24,39,.7); border-bottom: 1px solid rgba(255,255,255,.06); z-index: 50; }
+    .nav { max-width: var(--maxw); margin: 0 auto; display: flex; align-items: center; justify-content: space-between; padding: .75rem 1rem; }
+    .nav .brand { font-weight: 700; letter-spacing: .3px; }
+    .nav a { margin-left: 1rem; }
+    main { max-width: var(--maxw); margin: 0 auto; padding: 1rem; }
+
+    .hero { display: grid; grid-template-columns: 1.2fr .8fr; gap: 1rem; align-items: center; margin: 1rem 0 2rem; }
+    .hero .card { background: linear-gradient(180deg, rgba(255,255,255,.04), rgba(255,255,255,.02)); border: 1px solid rgba(255,255,255,.08); border-radius: var(--radius); padding: 1.25rem; box-shadow: 0 10px 30px rgba(0,0,0,.35); }
+    .tag { display: inline-block; border: 1px solid rgba(255,255,255,.14); color: var(--muted); padding: .15rem .5rem; border-radius: 999px; font-size: .8rem; margin-right: .25rem; }
+
+    h1 { font-size: clamp(1.4rem, 3.2vw, 2.2rem); margin: .2rem 0 .5rem; }
+    h2 { font-size: clamp(1.2rem, 2.6vw, 1.6rem); margin: 1.5rem 0 .5rem; }
+    h3 { font-size: 1.05rem; margin: 1rem 0 .4rem; color: var(--acc); }
+    p { margin: .3rem 0 .75rem; }
+
+    figure { margin: 0; }
+    figure img { width: 100%; height: auto; border-radius: 12px; display: block; }
+    figcaption { font-size: .9rem; color: var(--muted); margin-top: .4rem; }
+
+    .grid { display: grid; gap: 1rem; }
+    .grid-2 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .grid-3 { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+
+    .section { background: linear-gradient(180deg, rgba(255,255,255,.035), rgba(255,255,255,.02)); border: 1px solid rgba(255,255,255,.08); border-radius: var(--radius); padding: 1rem; box-shadow: 0 10px 30px rgba(0,0,0,.25); }
+
+    /* ----- Frise chronologique (simple, accessible) ----- */
+    .timeline { position: relative; padding-left: 1rem; }
+    .timeline::before { content: ""; position: absolute; left: 8px; top: 0; bottom: 0; width: 2px; background: rgba(255,255,255,.15); }
+    .tl-item { position: relative; margin: .8rem 0; padding-left: 1rem; }
+    .tl-dot { position: absolute; left: -2px; top: .4rem; width: 12px; height: 12px; border-radius: 999px; background: var(--acc); box-shadow: 0 0 0 3px rgba(34,211,238,.2); }
+    .tl-card { background: rgba(255,255,255,.04); border: 1px solid rgba(255,255,255,.08); border-radius: 12px; padding: .65rem .75rem; }
+    .tl-date { color: var(--acc-2); font-weight: 600; font-size: .9rem; letter-spacing: .2px; }
+
+    /* ----- Media ----- */
+    .media figure video, .media figure audio { width: 100%; outline: none; border-radius: 10px; background: #000; }
+
+    /* ----- Footer ----- */
+    footer { max-width: var(--maxw); margin: 2rem auto; padding: 1rem; color: var(--muted); border-top: 1px dashed rgba(255,255,255,.14); }
+
+    /* ----- Responsive ----- */
+    @media (max-width: 900px) { .hero { grid-template-columns: 1fr; } }
+    @media (max-width: 680px) { .grid-2 { grid-template-columns: 1fr; } .grid-3 { grid-template-columns: 1fr; } }
+
+    /* Print minimal */
+    @media print { header { position: static; background: none; } a { color: black; } .nav a { display:none; } body { color: black; background: white; } .section, .hero .card { box-shadow: none; border: 1px solid #ddd; }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <nav class="nav" aria-label="Navigation principale">
+      <div class="brand">Femmes dans l’ombre</div>
+      <div>
+        <a href="#portrait">Portrait</a>
+        <a href="#frise">Frise</a>
+        <a href="#images">Images</a>
+        <a href="#medias">Médias</a>
+        <a href="#manifeste">Manifeste</a>
+      </div>
+    </nav>
+  </header>
+
+  <main>
+    <!-- HERO -->
+    <section class="hero" id="accueil">
+      <div class="card">
+        <div>
+          <span class="tag">Seconde Guerre mondiale</span>
+          <span class="tag">Résistance</span>
+          <span class="tag">Mémoire</span>
+        </div>
+        <h1>Lucie Aubrac – Résistante de l’ombre</h1>
+        <p class="chapo">Enseignante à Lyon et figure majeure de la Résistance, Lucie Aubrac organise en 1943 l’évasion de son mari Raymond et de plusieurs résistants. Son courage éclaire la place des femmes dans le combat pour la liberté.</p>
+        <p style="color: var(--muted);">« J’ai simplement fait ce que ma conscience me dictait. » — Lucie Aubrac</p>
+      </div>
+      <figure>
+        <!-- Remplacez la source par votre fichier local, par ex. assets/img/lucie_aubrac.jpg -->
+        <img src="assets/img/lucie_aubrac.jpg" alt="Portrait de Lucie Aubrac, résistante, vers 1943" />
+        <figcaption>Lucie Aubrac, Lyon, 1943. Source suggérée : Archives nationales / Wikimedia Commons.</figcaption>
+      </figure>
+    </section>
+
+    <!-- PORTRAIT -->
+    <section class="section" id="portrait" aria-labelledby="titre-portrait">
+      <h2 id="titre-portrait">Portrait narratif</h2>
+      <div class="grid grid-2">
+        <div>
+          <h3>Contexte</h3>
+          <p>En 1940, la France est occupée. À Lyon, Lucie Aubrac, agrégée d’histoire, s’engage rapidement dans les réseaux de Résistance. Avec son mari Raymond, elle participe à l’organisation de groupes clandestins et à la diffusion de la presse résistante.</p>
+          <h3>Actions et risques</h3>
+          <p>Arrêté à plusieurs reprises, Raymond est emprisonné en 1943. Lucie orchestre alors une opération audacieuse pour le libérer, mettant en jeu sa vie et celle de ses complices. Interrogée, menacée par la Gestapo de Klaus Barbie, elle persévère et parvient à l’extraction.</p>
+          <h3>Héritage</h3>
+          <p>Après la guerre, Lucie Aubrac témoigne inlassablement dans les écoles et auprès du grand public. Son parcours incarne l’engagement des femmes dans la Résistance et la transmission d’une mémoire vivante.</p>
+        </div>
+        <div>
+          <figure>
+            <img src="assets/img/aubrac_carte_lyon.jpg" alt="Carte de Lyon avec repères des lieux de Résistance" />
+            <figcaption>Lieux clés à Lyon liés aux actions de 1943 (repères pédagogiques).</figcaption>
+          </figure>
+        </div>
+      </div>
+    </section>
+
+    <!-- FRISE CHRONOLOGIQUE -->
+    <section class="section" id="frise" aria-labelledby="titre-frise">
+      <h2 id="titre-frise">Frise chronologique 1939–1945</h2>
+      <div class="timeline" id="timeline" role="list"></div>
+    </section>
+
+    <!-- IMAGES & LÉGENDES -->
+    <section class="section" id="images" aria-labelledby="titre-images">
+      <h2 id="titre-images">Images commentées</h2>
+      <div class="grid grid-3">
+        <figure>
+          <img src="assets/img/usine_ouvrieres.jpg" alt="Ouvrières en usine pendant la guerre" />
+          <figcaption><strong>Ouvrières mobilisées, 1942.</strong> La main-d’œuvre féminine remplace massivement les hommes mobilisés. <em>Source :</em> Fonds d’archives (à renseigner).</figcaption>
+        </figure>
+        <figure>
+          <img src="assets/img/croix_rouge_infirmieres.jpg" alt="Infirmières de la Croix-Rouge soignant des blessés" />
+          <figcaption><strong>Infirmières de la Croix-Rouge.</strong> Un rôle vital dans les soins et l’évacuation des blessés. <em>Source :</em> Archives (à renseigner).</figcaption>
+        </figure>
+        <figure>
+          <img src="assets/img/rassemblement_liberation.jpg" alt="Femmes participant à la Libération" />
+          <figcaption><strong>Août 1944 – Libération.</strong> Les femmes participent aux opérations et à l’organisation civile. <em>Source :</em> Archives (à renseigner).</figcaption>
+        </figure>
+      </div>
+    </section>
+
+    <!-- MÉDIAS (AUDIO/VIDÉO) -->
+    <section class="section media" id="medias" aria-labelledby="titre-medias">
+      <h2 id="titre-medias">Médias – Témoignages</h2>
+      <div class="grid grid-2">
+        <figure>
+          <!-- Remplacez par votre fichier local, ex. assets/video/extrait.mp4 -->
+          <video controls preload="metadata" aria-label="Extrait vidéo témoignage">
+            <source src="assets/video/extrait.mp4" type="video/mp4" />
+            <!-- Optionnel : Sous-titres WebVTT -->
+            <track kind="subtitles" src="assets/video/extrait.vtt" srclang="fr" label="Français" default />
+          </video>
+          <figcaption><strong>Extrait vidéo (2:10).</strong> Témoignage sur l’organisation d’une évasion en 1943. <em>Source à créditer :</em> Archives audiovisuelles (à renseigner).</figcaption>
+        </figure>
+        <figure>
+          <!-- Remplacez par votre fichier local, ex. assets/audio/extrait.mp3 -->
+          <audio controls preload="metadata" aria-label="Extrait audio interview">
+            <source src="assets/audio/extrait.mp3" type="audio/mpeg" />
+          </audio>
+          <figcaption><strong>Extrait audio (1:05).</strong> Récit d’une mission d’agent de liaison. <em>Source :</em> Archives sonores (à renseigner).</figcaption>
+        </figure>
+      </div>
+    </section>
+
+    <!-- MANIFESTE -->
+    <section class="section" id="manifeste" aria-labelledby="titre-manifeste">
+      <h2 id="titre-manifeste">Manifeste mémoriel</h2>
+      <p>Nous, élèves de Bac Pro CIEL, affirmons que la mémoire du courage des femmes durant la Seconde Guerre mondiale est un levier d’éducation citoyenne. Se souvenir de Lucie Aubrac et de celles qui, dans l’ombre, ont risqué leur vie, c’est refuser l’oubli, reconnaître la pluralité des engagements, et défendre les libertés publiques. Leur rôle n’est pas périphérique : il est constitutif de la victoire et de la reconstruction démocratique.</p>
+      <p>À travers cette page, nous mettons en valeur des faits, des images et des voix sourcés, en assumant une démarche rigoureuse et respectueuse. Notre responsabilité est de transmettre, avec les outils du numérique, une mémoire accessible, claire et fidèle.</p>
+    </section>
+
+    <!-- SOURCES / CRÉDITS -->
+    <section class="section" aria-labelledby="titre-sources">
+      <h2 id="titre-sources">Sources & crédits</h2>
+      <ul>
+        <li>Ouvrages, articles, témoignages : à compléter selon vos recherches (indiquer auteur·ice, titre, édition, année).</li>
+        <li>Iconographie : privilégier des images libres (Wikimedia Commons, institutions avec licences ouvertes) et créditer précisément.</li>
+        <li>Médias : vérifier droits d’utilisation pédagogique ; sinon, utiliser extraits libres/domaine public.</li>
+      </ul>
+    </section>
+  </main>
+
+  <footer>
+    <small>Projet pédagogique – Démonstrateur HTML. Placez vos fichiers dans <code>assets/img/</code>, <code>assets/video/</code>, <code>assets/audio/</code>. Accessibilité : légendes, attributs <code>alt</code>, contrastes.</small>
+  </footer>
+
+  <script>
+    // ===== Frise chronologique – données exemple (à adapter) =====
+    const jalons = [
+      { date: '1939-09-03', titre: 'Mobilisation', texte: "Réorganisation des rôles féminins : travail, intendance, entraide." },
+      { date: '1941-01-01', titre: 'Entrée en Résistance', texte: "Lucie et Raymond Aubrac participent aux réseaux clandestins à Lyon." },
+      { date: '1943-03-15', titre: 'Arrestations', texte: "Multiplication des rafles ; risques élevés pour les agents de liaison." },
+      { date: '1943-06-21', titre: 'Évasion & action', texte: "Organisation d’une opération d’exfiltration audacieuse à Lyon." },
+      { date: '1944-08-25', titre: 'Libération', texte: "Participation active des femmes à la Libération et à l’organisation civile." },
+      { date: '1945-05-08', titre: 'Victoire & mémoire', texte: "Transmission des témoignages ; reconnaissance tardive mais essentielle." },
+    ];
+
+    const $timeline = document.getElementById('timeline');
+    jalons.forEach(j => {
+      const item = document.createElement('div');
+      item.className = 'tl-item';
+      item.setAttribute('role','listitem');
+      item.innerHTML = `
+        <div class="tl-dot" aria-hidden="true"></div>
+        <div class="tl-card">
+          <div class="tl-date">${new Date(j.date).toLocaleDateString('fr-FR', { year: 'numeric', month: 'long' })}</div>
+          <div class="tl-title"><strong>${j.titre}</strong></div>
+          <p>${j.texte}</p>
+        </div>`;
+      $timeline.appendChild(item);
+    });
+  </script>
+</body>
+</html>
+
