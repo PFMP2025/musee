@@ -1,4 +1,4 @@
-// Module imports (fixe le problème MIME et "is not a constructor")
+// Chargement en modules (ne pas ajouter d'autres <script> CDN ailleurs)
 import * as THREE from 'https://unpkg.com/three@0.160.0/build/three.module.js';
 import { OrbitControls } from 'https://unpkg.com/three@0.160.0/examples/jsm/controls/OrbitControls.js';
 
@@ -18,12 +18,12 @@ controls.enableDamping = true;
 controls.maxDistance = 30;
 controls.target.set(0, 2, 0);
 
-// Lights
+// Lumières
 const amb = new THREE.AmbientLight(0xffffff, 0.5); scene.add(amb);
 const dir = new THREE.SpotLight(0xffffff, 1.2, 100, Math.PI/6, 0.3, 1);
 dir.position.set(5, 8, 5); dir.target.position.set(0,2,0); scene.add(dir, dir.target);
 
-// Room
+// Salle
 const room = new THREE.Group();
 const floorMat = new THREE.MeshStandardMaterial({ color: 0x0f172a, roughness: 0.8, metalness: 0.1 });
 const wallMat  = new THREE.MeshStandardMaterial({ color: 0x111827, roughness: 0.9, metalness: 0.0 });
@@ -42,7 +42,7 @@ const right= new THREE.Mesh(sideGeo, wallMat); right.rotation.y = -Math.PI/2; ri
 
 scene.add(room);
 
-// Helpers to make textures for frames/labels
+// Helpers (textures texte)
 function wrapText(ctx, text, x, y, maxWidth, lineHeight){
   const words = (text||'').split(' ');
   let line = ''; let yy = y;
@@ -54,7 +54,6 @@ function wrapText(ctx, text, x, y, maxWidth, lineHeight){
   }
   ctx.fillText(line, x, yy);
 }
-
 function makeLabelTexture(title, subtitle){
   const W = 512, H = 512;
   const cnv = document.createElement('canvas'); cnv.width = W; cnv.height = H;
@@ -69,7 +68,6 @@ function makeLabelTexture(title, subtitle){
   ctx.fillText(subtitle || '', 60, H-90);
   return new THREE.CanvasTexture(cnv);
 }
-
 function makeSmallLabel(title, subtitle){
   const W = 512, H = 128;
   const cnv = document.createElement('canvas'); cnv.width = W; cnv.height = H;
@@ -83,12 +81,12 @@ function makeSmallLabel(title, subtitle){
   return new THREE.CanvasTexture(cnv);
 }
 
-// Raycast for interaction
+// Interaction (raycaster)
 const raycaster = new THREE.Raycaster();
 const mouse = new THREE.Vector2();
 const interactables = [];
 
-// Build frames from JSON
+// Génération des cadres depuis le JSON
 fetch('./resistantes.json').then(r=>r.json()).then(items => {
   const n = items.length;
   const perSide = Math.ceil(n/4);
@@ -130,7 +128,7 @@ fetch('./resistantes.json').then(r=>r.json()).then(items => {
   }
 });
 
-// Tooltip
+// Tooltip + clic
 const tip = document.createElement('div');
 tip.id = 'tooltip'; tip.style.display = 'none';
 document.body.appendChild(tip);
@@ -156,7 +154,6 @@ function onPointerMove(e){
   tip.style.display = 'none';
   document.body.style.cursor = 'default';
 }
-
 function onClick(e){
   const rect = renderer.domElement.getBoundingClientRect();
   mouse.x = ((e.clientX - rect.left) / rect.width) * 2 - 1;
@@ -166,22 +163,18 @@ function onClick(e){
   if (hits.length){
     let g = hits[0].object;
     while (g && !g.userData.url) g = g.parent;
-    if (g && g.userData.url){
-      window.open(g.userData.url, '_blank', 'noopener');
-    }
+    if (g && g.userData.url){ window.open(g.userData.url, '_blank', 'noopener'); }
   }
 }
-
 window.addEventListener('mousemove', onPointerMove);
 window.addEventListener('click', onClick);
 
-// Resize + animate
+// Resize + render loop
 window.addEventListener('resize', ()=>{
   renderer.setSize(window.innerWidth, window.innerHeight);
   camera.aspect = window.innerWidth / window.innerHeight;
   camera.updateProjectionMatrix();
 });
-
 (function tick(){
   controls.update();
   renderer.render(scene, camera);
