@@ -3,19 +3,17 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Musée 3D des Résistantes – Prototype</title>
+  <title>Musée 3D des Résistantes</title>
   <link rel="stylesheet" href="./styles3d.css" />
 </head>
 <body>
   <div id="hud">
     <h1>Musée 3D – Résistantes</h1>
-    <div class="hint">
-      Souris pour regarder · Molette pour zoomer · Clic sur un tableau pour ouvrir la page du groupe
-    </div>
+    <div class="hint">Souris: regarder · Molette: zoomer · Clic sur un tableau: ouvrir la page</div>
   </div>
   <canvas id="c"></canvas>
 
-  <!-- IMPORTANT: module -->
+  <!-- IMPORTANT : charger en module, et SUPPRIMER toute balise <script> vers three.min.js / OrbitControls.js -->
   <script type="module" src="./museum3d.js"></script>
 </body>
 </html>
