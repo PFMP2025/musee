@@ -4,9 +4,7 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>Musée 3D des Résistantes</title>
-  <link rel="stylesheet" href="./styles3d.css" />
   <style>
-    /* petit HUD lisible partout */
     #hud{
       position:fixed;left:12px;top:12px;z-index:3;
       padding:10px 12px;border-radius:12px;border:1px solid #ffffff33;
@@ -22,11 +20,11 @@
 <body>
   <div id="hud">
     <h1>Musée 3D – Résistantes</h1>
-    <div class="hint">Souris pour regarder • Molette pour zoomer • Clic sur un tableau pour ouvrir</div>
+    <div class="hint">Souris: regarder • Molette: zoomer • Clic sur un tableau pour ouvrir</div>
   </div>
   <canvas id="c"></canvas>
 
-  <!-- code 3D en module ; CDN skypack = compatible tous navigateurs modernes -->
+  <!-- Code 3D (module) -->
   <script type="module" src="./museum3d.js"></script>
 </body>
 </html>
