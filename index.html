@@ -1,4 +1,5 @@
-<!doctype html><meta charset="utf-8">
+<!doctype html>
+<meta charset="utf-8">
 <title>Musée 2D (fallback)</title>
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <link rel="stylesheet" href="./styles3d.css">
@@ -9,11 +10,11 @@
 </main>
 <script>
 fetch('./resistantes.json').then(r=>r.json()).then(items=>{
-  list.innerHTML = items.map(x=>\`
+  list.innerHTML = items.map(x=>`
   <article style="border:1px solid #fff3;padding:10px;margin:8px 0;border-radius:10px">
-    <h3>\${x.nom}</h3><small>\${x.ville||''} · \${x.annee||''}</small><br>
-    <a href="\${x.url}" target="_blank" rel="noopener">Ouvrir</a>
-  </article>\`).join('');
+    <h3>${x.nom}</h3><small>${x.ville||''} · ${x.annee||''}</small><br>
+    <a href="${x.url}" target="_blank" rel="noopener">Ouvrir</a>
+  </article>`).join('');
 });
 </script>
 </body>
