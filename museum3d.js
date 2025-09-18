@@ -1,6 +1,6 @@
-// Imports robustes (pas d'import map nécessaire)
-import * as THREE from 'https://cdn.skypack.dev/three@0.160.0';
-import { OrbitControls } from 'https://cdn.skypack.dev/three@0.160.0/examples/jsm/controls/OrbitControls.js';
+// Imports robustes (esm.sh réécrit les imports -> pas d'import map nécessaire)
+import * as THREE from 'https://esm.sh/three@0.160.0';
+import { OrbitControls } from 'https://esm.sh/three@0.160.0/examples/jsm/controls/OrbitControls.js';
 
 const canvas = document.getElementById('c');
 const renderer = new THREE.WebGLRenderer({ canvas, antialias: true });
@@ -8,7 +8,7 @@ renderer.setSize(innerWidth, innerHeight);
 renderer.setPixelRatio(Math.min(2, devicePixelRatio || 1));
 renderer.outputColorSpace = THREE.SRGBColorSpace;
 renderer.toneMapping = THREE.ACESFilmicToneMapping;
-renderer.toneMappingExposure = 1.1;
+renderer.toneMappingExposure = 1.25;
 
 const scene = new THREE.Scene();
 scene.background = new THREE.Color(0x121826);
@@ -22,24 +22,22 @@ controls.minDistance = 3;
 controls.maxDistance = 26;
 controls.target.set(0, 1.9, 0);
 
-// Eclairage global + ambiance galerie
-scene.add(new THREE.AmbientLight(0xffffff, 0.35));
+// Lumière ambiance + dôme
+scene.add(new THREE.AmbientLight(0xffffff, 0.38));
 const hemi = new THREE.HemisphereLight(0xcfe3ff, 0x1a2030, 0.8);
 hemi.position.set(0, 6, 0);
 scene.add(hemi);
 
-// --- Salle de musée (sol clair mat, murs satinés) ---
+// Salle (sol, plafond, murs)
 const room = new THREE.Group();
 const floorMat = new THREE.MeshStandardMaterial({ color: 0x1b2334, roughness: 0.9, metalness: 0.05 });
 const wallMat  = new THREE.MeshStandardMaterial({ color: 0x202a3d, roughness: 0.95, metalness: 0.0 });
 
 const floor = new THREE.Mesh(new THREE.PlaneGeometry(26, 18), floorMat);
-floor.rotation.x = -Math.PI/2;
-room.add(floor);
+floor.rotation.x = -Math.PI/2; room.add(floor);
 
 const ceil = new THREE.Mesh(new THREE.PlaneGeometry(26, 18), wallMat);
-ceil.rotation.x =  Math.PI/2; ceil.position.y = 4.6;
-room.add(ceil);
+ceil.rotation.x =  Math.PI/2; ceil.position.y = 4.6; room.add(ceil);
 
 const wallLong = new THREE.PlaneGeometry(26, 4.6);
 const wallShort= new THREE.PlaneGeometry(18, 4.6);
@@ -47,10 +45,9 @@ const back  = new THREE.Mesh(wallLong, wallMat);  back.position.set(0,2.3,-9); r
 const front = new THREE.Mesh(wallLong, wallMat);  front.rotation.y = Math.PI; front.position.set(0,2.3, 9); room.add(front);
 const left  = new THREE.Mesh(wallShort,wallMat);  left.rotation.y = Math.PI/2; left.position.set(-13,2.3,0); room.add(left);
 const right = new THREE.Mesh(wallShort,wallMat);  right.rotation.y =-Math.PI/2; right.position.set( 13,2.3,0); room.add(right);
-
 scene.add(room);
 
-// -- utilitaires pour étiquettes (fallback si pas d'image) --
+// Outils texte (fallback si pas d'image)
 function wrapText(ctx, text, x, y, maxWidth, lineHeight){
   const words = (text||'').split(' '); let line=''; let yy=y;
   for (let n=0;n<words.length;n++){
@@ -83,15 +80,10 @@ function makeSmallLabel(title, subtitle){
   const tex=new THREE.CanvasTexture(c); tex.colorSpace = THREE.SRGBColorSpace; return tex;
 }
 
-// Chargement de texture image + "contain" dans le cadre
+// Ajustement d'image "contain" dans la toile
 const texLoader = new THREE.TextureLoader();
-texLoader.crossOrigin = 'anonymous';
-
-// dimensions "cadre" (extérieur) et "toile" (intérieur visible max)
-const TOILE_MAX_W = 2.4;
-const TOILE_MAX_H = 1.6;
-const CADRE_W = TOILE_MAX_W + 0.22;
-const CADRE_H = TOILE_MAX_H + 0.22;
+const TOILE_MAX_W = 2.4, TOILE_MAX_H = 1.6;
+const CADRE_W = TOILE_MAX_W + 0.22, CADRE_H = TOILE_MAX_H + 0.22;
 
 function fitSizeToFrame(imgW, imgH){
   const ratio = imgW / imgH;
@@ -99,10 +91,9 @@ function fitSizeToFrame(imgW, imgH){
   if (h > TOILE_MAX_H){ h = TOILE_MAX_H; w = h * ratio; }
   return { w, h };
 }
-
 function makeArtMeshFromImage(url, fallbackTitle, sub){
   return new Promise(resolve=>{
-    if(!url){ // pas d'image => fallback texte
+    if(!url){
       const t = makeLabelTexture(fallbackTitle, sub);
       const m = new THREE.Mesh(new THREE.PlaneGeometry(TOILE_MAX_W, TOILE_MAX_H),
                                new THREE.MeshStandardMaterial({ map: t, roughness:0.7 }));
@@ -115,17 +106,14 @@ function makeArtMeshFromImage(url, fallbackTitle, sub){
       const geo = new THREE.PlaneGeometry(w, h);
       const mat = new THREE.MeshStandardMaterial({ map: tex, roughness:0.6, metalness:0.0 });
       resolve(new THREE.Mesh(geo, mat));
-    }, undefined, ()=>{ // en cas d’erreur : fallback texte
+    }, undefined, ()=>{
       const t = makeLabelTexture(fallbackTitle, sub);
-      const m = new THREE.Mesh(new THREE.PlaneGeometry(TOILE_MAX_W, TOILE_MAX_H),
-                               new THREE.MeshStandardMaterial({ map: t, roughness:0.7 }));
-      resolve(m);
+      resolve(new THREE.Mesh(new THREE.PlaneGeometry(TOILE_MAX_W, TOILE_MAX_H),
+              new THREE.MeshStandardMaterial({ map: t, roughness:0.7 })));
     });
   });
 }
-
 function addPictureLight(group){
-  // spot discret au-dessus et un petit fill-light
   const spot = new THREE.SpotLight(0xffffff, 15, 6, Math.PI/8, 0.4, 1);
   spot.position.set(0, 1.3, 0.6);
   spot.target.position.set(0, 0, 0.1);
@@ -140,19 +128,16 @@ const interactables = [];
 async function addFrame(pos, rotY, data){
   const group = new THREE.Group(); group.position.copy(pos); group.rotation.y = rotY || 0;
 
-  // cadre bois foncé (léger chanfrein)
   const frame = new THREE.Mesh(
     new THREE.BoxGeometry(CADRE_W, CADRE_H, 0.08),
     new THREE.MeshStandardMaterial({ color: 0x2b3548, metalness: 0.2, roughness: 0.4 })
   );
 
-  // toile (image ajustée "contain")
   const art = await makeArtMeshFromImage(
     data.vignette, data.nom, `${data.ville||''} · ${data.annee||''}`
   );
   art.position.z = 0.028;
 
-  // cartel (étiquette)
   const lblTex = makeSmallLabel(`${data.nom}`, `${data.ville||''} · ${data.annee||''}`);
   const lbl = new THREE.Mesh(new THREE.PlaneGeometry(1.7, 0.38),
                              new THREE.MeshBasicMaterial({ map: lblTex, transparent: true }));
@@ -164,7 +149,7 @@ async function addFrame(pos, rotY, data){
   scene.add(group); interactables.push(group);
 }
 
-// Répartition dans la salle
+// Placement sur les murs
 fetch('./resistantes.json').then(r=>r.json()).then(async items=>{
   const n = items.length;
   const perSide = Math.max(1, Math.ceil(n/4));
@@ -184,7 +169,7 @@ fetch('./resistantes.json').then(r=>r.json()).then(async items=>{
   }
 });
 
-// UX : tooltip simple + clic pour ouvrir
+// Survol + clic
 const tip = document.createElement('div');
 tip.style.cssText = 'position:fixed;pointer-events:none;background:#111827cc;color:#fff;font-size:12px;padding:6px 8px;border-radius:8px;border:1px solid #ffffff33;transform:translate(-50%,-130%);white-space:nowrap;display:none;z-index:5';
 document.body.appendChild(tip);
