@@ -1,5 +1,5 @@
-// museum3d.js — version modules (à la racine du dépôt)
-import * as THREE from 'https://unpkg.com/three@0.160.0/build/three.module.js';
+// museum3d.js — version modules (CDN + import map)
+import * as THREE from 'three';
 import { OrbitControls } from 'https://unpkg.com/three@0.160.0/examples/jsm/controls/OrbitControls.js';
 
 const canvas = document.getElementById('c');
@@ -23,7 +23,7 @@ const amb = new THREE.AmbientLight(0xffffff, 0.5); scene.add(amb);
 const dir = new THREE.SpotLight(0xffffff, 1.2, 100, Math.PI/6, 0.3, 1);
 dir.position.set(5, 8, 5); dir.target.position.set(0,2,0); scene.add(dir, dir.target);
 
-// Salle
+// Salle (sol + murs)
 const room = new THREE.Group();
 const floorMat = new THREE.MeshStandardMaterial({ color: 0x0f172a, roughness: 0.8, metalness: 0.1 });
 const wallMat  = new THREE.MeshStandardMaterial({ color: 0x111827, roughness: 0.9, metalness: 0.0 });
@@ -42,7 +42,7 @@ const right= new THREE.Mesh(sideGeo, wallMat); right.rotation.y = -Math.PI/2; ri
 
 scene.add(room);
 
-// Helpers (textures avec texte)
+// Helpers (textures texte)
 function wrapText(ctx, text, x, y, maxWidth, lineHeight){
   const words = (text||'').split(' ');
   let line = ''; let yy = y;
@@ -169,7 +169,7 @@ function onClick(e){
 window.addEventListener('mousemove', onPointerMove);
 window.addEventListener('click', onClick);
 
-// Resize + boucle
+// Resize + render loop
 window.addEventListener('resize', ()=>{
   renderer.setSize(window.innerWidth, window.innerHeight);
   camera.aspect = window.innerWidth / window.innerHeight;
