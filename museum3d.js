@@ -23,9 +23,8 @@ controls.enableDamping = true;
 
 controls.minDistance = 3.0;
 controls.maxDistance = 22.0;
-// ↘ empêcher de passer sous l’horizon (plus de “je traverse le sol”)
-controls.minPolarAngle = 0.15;              // un peu au-dessus de l’horizon
-controls.maxPolarAngle = Math.PI / 2 - 0.05; // jamais plus bas que l’horizon
+controls.minPolarAngle = 0.15;              
+controls.maxPolarAngle = Math.PI / 2 - 0.05; 
 controls.enablePan = false;
 
 
