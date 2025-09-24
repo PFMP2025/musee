@@ -1,4 +1,4 @@
-// Musée 3D clair + cadres avec images visibles, limites de caméra OK
+
 import * as THREE from 'https://esm.sh/three@0.160.0';
 import { OrbitControls } from 'https://esm.sh/three@0.160.0/examples/jsm/controls/OrbitControls.js';
 
@@ -13,14 +13,14 @@ renderer.toneMappingExposure = 2.0; // plus lumineux
 const scene = new THREE.Scene();
 scene.background = new THREE.Color(0x182233);
 
-// ---------- Caméra & contrôles (arriver au milieu + pas de "sol") ----------
+
 const camera = new THREE.PerspectiveCamera(60, innerWidth / innerHeight, 0.1, 200);
 // milieu de la pièce
 camera.position.set(0, 2.0, 7);
 const controls = new OrbitControls(camera, renderer.domElement);
 controls.target.set(0, 1.9, 0);
 controls.enableDamping = true;
-// ↘ bornes zoom (change minDistance si tu veux “plus près”)
+
 controls.minDistance = 3.0;
 controls.maxDistance = 22.0;
 // ↘ empêcher de passer sous l’horizon (plus de “je traverse le sol”)
@@ -28,7 +28,7 @@ controls.minPolarAngle = 0.15;              // un peu au-dessus de l’horizon
 controls.maxPolarAngle = Math.PI / 2 - 0.05; // jamais plus bas que l’horizon
 controls.enablePan = false;
 
-// ---------- Salle ----------
+
 const room = new THREE.Group();
 const floorMat = new THREE.MeshStandardMaterial({ color: 0x2b3b53, roughness: 0.8, metalness: 0.05 });
 const wallMat  = new THREE.MeshStandardMaterial({ color: 0x33455d, roughness: 0.92, metalness: 0.02 });
@@ -50,13 +50,13 @@ const left  = new THREE.Mesh(wallShort, wallMat); left.rotation.y =  Math.PI/2; 
 const right = new THREE.Mesh(wallShort, wallMat); right.rotation.y = -Math.PI/2; right.position.set( 13, 2.3, 0); room.add(right);
 scene.add(room);
 
-// ---------- Éclairage clair ----------
+
 scene.add(new THREE.AmbientLight(0xffffff, 0.9));
 const hemi = new THREE.HemisphereLight(0xdfe8ff, 0x1b2130, 0.9); hemi.position.set(0, 8, 0); scene.add(hemi);
 const dir1 = new THREE.DirectionalLight(0xffffff, 0.9); dir1.position.set( 4, 6,  5); scene.add(dir1);
 const dir2 = new THREE.DirectionalLight(0xffffff, 0.7); dir2.position.set(-4, 6, -5); scene.add(dir2);
 
-// ---------- Outils étiquettes (fallback si image KO) ----------
+
 function wrapText(ctx, text, x, y, maxWidth, lineHeight){
   const words = (text || '').split(' '); let line = ''; let yy = y;
   for (let i=0;i<words.length;i++){ const t=line+words[i]+' ';
@@ -85,10 +85,10 @@ function makeSmallLabel(title, subtitle){
   const tex=new THREE.CanvasTexture(c); tex.colorSpace=THREE.SRGBColorSpace; return tex;
 }
 
-// ---------- Images "contain" dans le cadre ----------
+
 const texLoader = new THREE.TextureLoader();
 const TOILE_MAX_W = 2.4, TOILE_MAX_H = 1.6;
-// ⚠️ cadre très fin, pour ne pas masquer l'image
+
 const CADRE_DEPTH = 0.02;                 // était 0.08 → posait problème
 const CADRE_W = TOILE_MAX_W + 0.22, CADRE_H = TOILE_MAX_H + 0.22;
 
@@ -137,11 +137,11 @@ async function addFrame(pos, rotY, data){
     new THREE.MeshStandardMaterial({ color: 0x324155, metalness: 0.2, roughness: 0.35 })
   );
 
-  // ⚠️ METTRE L’IMAGE DEVANT LE CADRE (pour qu’elle soit visible)
+ 
   const art = await makeArtMeshFromImage(
     data.vignette, data.nom, `${data.ville||''} · ${data.annee||''}`
   );
-  art.position.z = CADRE_DEPTH/2 + 0.01; // devant la face avant
+  art.position.z = CADRE_DEPTH/2 + 0.01; 
 
   const lblTex = makeSmallLabel(`${data.nom}`, `${data.ville||''} · ${data.annee||''}`);
   const lbl = new THREE.Mesh(new THREE.PlaneGeometry(1.7, 0.38),
@@ -154,7 +154,6 @@ async function addFrame(pos, rotY, data){
   scene.add(g); interactables.push(g);
 }
 
-// ---------- Placement sur les murs ----------
 fetch('./resistantes.json').then(r=>r.json()).then(async items=>{
   const n = items.length, perSide = Math.max(1, Math.ceil(n/4));
   const gapLong = 26 / (perSide + 1), gapShort = 18 / (perSide + 1);
@@ -172,7 +171,7 @@ fetch('./resistantes.json').then(r=>r.json()).then(async items=>{
   }
 });
 
-// ---------- Survol + clic ----------
+
 const tip = document.createElement('div');
 tip.style.cssText = 'position:fixed;pointer-events:none;background:#0f1626cc;color:#fff;font-size:12px;padding:6px 8px;border-radius:8px;border:1px solid #ffffff33;transform:translate(-50%,-130%);white-space:nowrap;display:none;z-index:5';
 document.body.appendChild(tip);
@@ -197,7 +196,7 @@ addEventListener('mousemove', e=>{
 });
 addEventListener('click', e=> pick(e, g=> window.open(g.userData.url, '_blank', 'noopener')));
 
-// ---------- Resize + rendu ----------
+
 addEventListener('resize', ()=>{
   renderer.setSize(innerWidth, innerHeight);
   camera.aspect = innerWidth / innerHeight; camera.updateProjectionMatrix();
